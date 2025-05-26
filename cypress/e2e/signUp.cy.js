@@ -23,6 +23,7 @@ describe('Sign Up page', () => {
 
   it('should sign up succefully', () => {
     signInPage.visit();
+    cy.wait(1000);
     cy.register(email, username, password);
   });
 

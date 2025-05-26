@@ -8,7 +8,7 @@ describe('Article', () => {
   let username;
   let email;
   let password;
-  
+
   before(() => {});
 
   beforeEach(() => {
@@ -63,19 +63,23 @@ describe('Article', () => {
     });
   });
 
-  it.only('should be deleted using Delete button', () => {
-    cy.contains('a', 'New Article').click();
+  it('should be deleted using Delete button', () => {
+  cy.contains('a', 'New Article').click();
 
-    cy.task('generateArticle').then((article) => {
-      articlePage.typeTitle(article.title);
-      articlePage.typeAbout(article.description);
-      articlePage.typeText(article.body);
-      articlePage.typeTag('Other');
+  cy.task('generateArticle').then((article) => {
+    articlePage.typeTitle(article.title);
+    articlePage.typeAbout(article.description);
+    articlePage.typeText(article.body);
+    articlePage.typeTag('Other');
 
-      articlePage.clickPublishArticleBtn();
+    articlePage.clickPublishArticleBtn();
 
-      cy.contains('button', 'Delete Article').click();
-      cy.contains('div', 'No articles are here... yet.');
-    });
+    cy.contains('button', 'Delete Article').click();
+
+    cy.contains(article.title).should('not.exist');
+
+    cy.contains('div', 'No articles are here... yet.').should('exist');
   });
+});
+
 });

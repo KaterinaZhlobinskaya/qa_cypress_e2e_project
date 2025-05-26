@@ -9,12 +9,12 @@ describe('User', () => {
   before(() => {
     cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
-      userTarget = generateUser;
+      userTarget = generateUser();
       cy.register(userTarget.email, userTarget.username, userTarget.password);
-      userFollower = generateUser;
+      userFollower = generateUser();
       userFollower.email += 'world';
       userFollower.username += 'follower';
-      cy.register(
+      return cy.register(
         userFollower.email,
         userFollower.username,
         userFollower.password

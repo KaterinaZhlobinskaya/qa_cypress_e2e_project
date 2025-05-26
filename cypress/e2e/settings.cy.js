@@ -28,17 +28,20 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update username', () => {
-    homePage.usernameLink.click();
-    cy.contains('a', 'Edit Profile Settings').click();
+  homePage.usernameLink.click();
+  cy.contains('a', 'Edit Profile Settings').click();
 
-    cy.get('input[placeholder="Your username"]').clear();
-    cy.get('input[placeholder="Your username"]').type(user.username + '123');
+  cy.get('input[placeholder="Your username"]').clear();
+  const updatedUsername = user.username + '123';
+  cy.get('input[placeholder="Your username"]').type(updatedUsername);
 
-    cy.contains('button', 'Update Settings').click();
+  cy.contains('button', 'Update Settings').click();
 
-    homePage.visit();
-    cy.contains('a[data-cy="username-link"]', user.username + '123');
-  });
+  user.username = updatedUsername;
+
+  homePage.visit();
+  cy.contains('a[data-cy="username-link"]', user.username);
+});
 
   it('should provide an ability to update bio', () => {
     homePage.usernameLink.click();
