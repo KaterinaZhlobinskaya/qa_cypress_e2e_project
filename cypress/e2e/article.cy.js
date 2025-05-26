@@ -12,8 +12,8 @@ describe('Article', () => {
   before(() => {});
 
   beforeEach(() => {
-    cy.task('db:clear');
-    return cy.task('generateUser').then((user) => {
+    return cy.task('db:clear').then(() => {
+      return cy.task('generateUser').then((user) => {
       username = user.username;
       email = user.email;
       password = user.password;
@@ -25,6 +25,7 @@ describe('Article', () => {
       signInPage.typePassword(password);
       signInPage.clickSignInBtn();
     });
+    })
   });
 
   it('should be created using New Article form', () => {
