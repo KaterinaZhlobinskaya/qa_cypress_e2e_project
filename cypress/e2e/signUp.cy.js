@@ -13,18 +13,20 @@ describe('Sign Up page', () => {
   before(() => {});
 
   beforeEach(() => {
-    cy.task('db:clear');
-    cy.task('generateUser').then((user) => {
-      username = user.username;
-      email = user.email;
-      password = user.password;
-    });
+    return cy.task('db:clear').then(() => {
+      return cy.task('generateUser').then((user) => {
+        username = user.username;
+        email = user.email;
+        password = user.password;
+      });
+    })
   });
 
   it('should sign up succefully', () => {
-    signInPage.visit();
-    cy.wait(1000);
-    cy.register(email, username, password);
+    return cy.wrap(null).then(() => {
+      signInPage.visit();
+      cy.register(email, username, password);
+    });
   });
 
   it('should not sign up if invalid email', () => {

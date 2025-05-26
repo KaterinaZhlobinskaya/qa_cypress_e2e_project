@@ -8,16 +8,16 @@ describe('Settings page', () => {
   let user;
 
   before(() => {
-    cy.task('db:clear');
-    cy.task('generateUser').then((generateUser) => {
-      user = generateUser;
-      cy.register(user.email, user.username, user.password);
-    });
+    return cy.task('db:clear').then(() => {
+      return cy.task('generateUser').then((generateUser) => {
+        user = generateUser;
+        return cy.register(user.email, user.username, user.password);
+      });
+    })
   });
 
   beforeEach(() => {
     signInPage.visit();
-
     signInPage.typeEmail(user.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
